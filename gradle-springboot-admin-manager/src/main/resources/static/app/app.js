@@ -7,37 +7,53 @@ MyApp.config(function ($httpProvider) {
 });
 
 
+
 // 通过全局应用$state服务
 MyApp.run(['$rootScope', '$state', function($rootScope, $state) {
     $rootScope.$state = $state
 }])
 
 
+MyApp.config(function($stateProvider, $urlRouterProvider) {
+    MyApp.resolveScriptDeps = function(dependencies) { // 按需加载服务
+        return function($q, $rootScope) {
+            var deferred = $q.defer()
+            $script(dependencies, function() {
+                $rootScope.$apply(function() {
+                    deferred.resolve()
+                })
+            })
 
-MyApp.controller('UpLoaderController', function ($rootScope, $scope,$state, $stateParams, $http, $timeout,Upload) {
-    $scope.submit = function () {
-        $scope.upload($scope.file);
-    };
+            return deferred.promise
+        }
+    }
 
-    $scope.upload = function (file) {
-        $scope.fileInfo = file;
-        Upload.upload({
-            //服务端接收
-            url: '/uploader',
-            //上传的同时带的参数
-            file: file
-        }).progress(function (evt) {
-            //进度条
-            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            console.log('progess:' + progressPercentage + '%' + evt.config.file.name);
-        }).success(function (data, status, headers, config) {
-            //上传成功
-            console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
-            $scope.uploadImg = data;
-        }).error(function (data, status, headers, config) {
-            //上传失败
-            console.log('error status: ' + status);
-        });
-    };
+    // 定义路由
+    // 定义默认路径、重定向
+    $urlRouterProvider.otherwise('/page-upload');
+    $stateProvider.state('page-upload', {
+            url: '/page-upload',
+            templateUrl: 'app/view/upload-page.html',
+            controller: 'UploadPageController',
+            resolve: { // 加载第三方js依赖
+                deps:MyApp.resolveScriptDeps([
+                    'assets/js/jqPaginator.min.js'
+                ])
+            }
+        })
+        .state('time-pick', {
+            url: '/time-pick',
+            templateUrl: 'app/view/time-pick.html',
+            controller: 'TimePickController',
+            resolve: { // 加载第三方js依赖
+                deps: MyApp.resolveScriptDeps([
+                    'assets/js/bootstrap-datetimepicker.js',
+                ])
+            }
+        })
 
 })
+
+
+
+

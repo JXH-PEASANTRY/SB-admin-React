@@ -1,0 +1,41 @@
+<section class="content-header">
+    <h1>时间选择器</h1>
+</section>
+
+
+<section class="content" ng-init="timePickInit()">
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="col-md-2 padding-l-5">
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </div>
+                <input id="start"
+                       type="text"
+                       ng-model="startTime"
+                       placeholder="选择日期范围"
+                       class="form-control pull-right"
+                       readonly>
+            </div>
+        </div>
+        <div class="col-md-2 padding-l-5">
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </div>
+                <input id="end"
+                       type="text"
+                       ng-model="endTime"
+                       placeholder="选择日期范围"
+                       class="form-control pull-right"
+                       readonly>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</section>

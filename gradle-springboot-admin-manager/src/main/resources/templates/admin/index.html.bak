@@ -57,15 +57,14 @@
     <script src="assets/css/moment.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/AdminLTE/js/app.min.js"></script>
-    <script src="assets/js/bootstrap-datetimepicker.js"></script>
+    <script src="assets/css/bootstrap-datetimepicker.js"></script>
 
     <!--controllers-->
     <script src="app/app.js"></script>
     <script src="app/app-config.js"></script>
 
     <!--module-->
-    <script src="app/scripts/upload-page.js"></script>
-    <script src="app/scripts/time-pick.js"></script>
+
     <!--components-->
     <script src="components/sidebar.js"></script>
 
@@ -74,8 +73,8 @@
 <div class="wrapper">
     <header class="main-header">
         <a href="" class="logo">
-            <span class="logo-mini">Gradle+Spring boot</span>
-            <span class="logo-lg">Gradle+Spring boot</span>
+            <span class="logo-mini">腾道</span>
+            <span class="logo-lg">腾道信息技术</span>
         </a>
         <nav class="navbar navbar-static-top" role="navigation">
             <!-- Sidebar toggle button-->
@@ -85,13 +84,13 @@
             <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
-                    <li>
+                    <li >
                         <p class="username">
                             <!--<span th:text="${#authentication.name}"></span>-->
                         </p>
                     </li>
-                    <li>
-                        <a href="/logout">Logout</a>
+                    <li >
+                        <a href="/logout" >Logout</a>
                     </li>
                 </ul>
             </div>
@@ -101,26 +100,42 @@
     <aside class="main-sidebar">
         <sidebar id="left_menu">
             <sidebarhead header-content="管理"></sidebarhead>
-            <li data-sidebaritem="firstMenu" ng-class="{active:$state.includes('jqpage-upload')}">
-                <a ui-sref="page-upload"><i class="fa fa-link"></i> <span>分页</span></a>
+            <li data-sidebaritem="firstMenu" ng-class="{active:$state.includes('analysis-manager')}">
+                <a ui-sref="analysis-manager"><i class="fa fa-link"></i> <span>退信管理</span></a>
             </li>
-            <li data-sidebaritem="firstMenu" ng-class="{active:$state.includes('time-pick')}">
-                <a ui-sref="time-pick"><i class="fa fa-link"></i> <span>时间选择器</span></a>
+            <li data-sidebaritem="firstMenu" ng-class="{active:$state.includes('mail-filter-type')}">
+                <a ui-sref="mailfiltertype"><i class="fa fa-link"></i> <span>过滤库</span></a>
             </li>
         </sidebar>
     </aside>
 
-
     <div class="content-wrapper">
-        <div data-ui-view></div>
+
+        <div ng-controller="UpLoaderController" >
+            <div class="col-xs-2" >
+                <div class="button" ngf-select ng-model="file" name="file" >
+上传文件
+
+            </div>
+                <div style="margin-top: 20px"><button type="submit" ng-click="submit()">submit</button></div>
+
+        </div>
+
+
     </div>
-
-
+</div>
     <footer class="main-footer">
 
     </footer>
 </div>
 
+<!--<div ng-controller="AlertCtrl" style="position:fixed;z-index:1001;width:60%;right:10%;top:50px;color:red;">-->
+
+    <!--<div ng-repeat="alert in alerts">-->
+        <!--<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>-->
+
+    <!--</div>-->
+<!--</div>-->
 
 
 </body>
