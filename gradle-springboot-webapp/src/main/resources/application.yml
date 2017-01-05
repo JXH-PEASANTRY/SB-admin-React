@@ -1,0 +1,52 @@
+server:
+  port: 8087
+
+logging:
+  path: logs/
+  level:
+    root: INFO
+
+spring:
+  profiles.active: mysql,dev
+#  下载转义标题
+  messages:
+    basename: cn/gradle-springboot/messages
+  jpa:
+    open-in-view: true
+    show-sql: true
+    properties:
+      jadira.usertype.autoRegisterUserTypes: true
+    hibernate:
+      naming-strategy: cn.gradle.springboot.jpa.config.CustomNamingStrategy
+      ddl-auto: update
+  thymeleaf:
+      enabled: true
+      cache: false
+      mode: LEGACYHTML5
+
+security:
+  ignored: /favicon.ico,css/**,/js/**,/fonts/**,/img/**,/webjars/**,/admin/app/**,/admin/assets/**,/admin/css/**,/admin/html/**,/admin/images/**
+  user:
+    name: admin
+    password: admin
+
+---
+
+spring:
+  profiles: mysql
+  datasource:
+    driver-class-name: ${datasource.driver-class-name:com.mysql.jdbc.Driver}
+    url: ${datasource.url:jdbc:mysql://localhost:3306/gradle_springboot}
+    username: ${datasource.username:root}
+    password: ${datasource.password:}
+    test-while-idle: true
+    test-on-borrow: true
+    validation-query: SELECT 1
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: update
+#flyway:
+#  locations: classpath:db/migration/mysql
+
+

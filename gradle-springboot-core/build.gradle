@@ -1,0 +1,73 @@
+description = "gradle-springboot-core"
+
+sourceSets {
+    generated {
+        java {
+            srcDirs = ['src/main/generated']
+        }
+    }
+}
+
+configurations {
+    querydslapt
+}
+
+dependencies {
+    compile "org.springframework:spring-aspects"
+    compile "org.springframework:spring-context-support"
+    compile "org.springframework.data:spring-data-jpa"
+    compile "org.hibernate:hibernate-validator"
+    compile "org.hibernate:hibernate-entitymanager"
+    compile "org.hsqldb:hsqldb"
+    compile "org.jadira.usertype:usertype.core:${usertypeVersion}"
+    compile "joda-time:joda-time"
+    compile "com.fasterxml.jackson.core:jackson-databind"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-joda"
+    compile "org.apache.commons:commons-lang3"
+    compile "commons-beanutils:commons-beanutils"
+    compile "org.jasig.inspektr:inspektr-audit:${inspektrVersion}"
+    compile "org.jasig.inspektr:inspektr-support-spring:${inspektrVersion}"
+    compile "com.mysema.querydsl:querydsl-jpa"
+    compile "org.apache.poi:poi"
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.6.2'
+    compile group: 'com.qiniu', name: 'happy-dns-java', version: '0.1.4'
+
+
+    querydslapt "com.mysema.querydsl:querydsl-apt"
+}
+
+task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+    source = sourceSets.main.java
+    classpath = configurations.compile + configurations.querydslapt
+    options.compilerArgs = [
+            "-proc:only",
+            "-processor", "com.mysema.query.apt.jpa.JPAAnnotationProcessor"
+    ]
+    destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
+}
+
+compileJava {
+    dependsOn generateQueryDSL
+    source generateQueryDSL.destinationDir
+}
+
+compileGeneratedJava {
+    dependsOn generateQueryDSL
+    options.warnings = false
+    classpath += sourceSets.main.runtimeClasspath
+}
+
+clean {
+    delete sourceSets.generated.java.srcDirs
+}
+
+idea {
+    module {
+        sourceDirs += file('src/main/generated')
+    }
+}
+
+if(project.hasProperty('jpaSchema')) {
+    apply from: 'jpaSchema.gradle'
+}

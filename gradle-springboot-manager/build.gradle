@@ -1,0 +1,24 @@
+group 'gradle.springboot'
+version '1.0.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+dependencies {
+
+    compile project(':gradle-springboot-core')
+    compile fileTree(dir: '../libs', include: '*.jar')
+    compile "org.springframework:spring-webmvc"
+    compile "org.springframework.security:spring-security-web"
+    compile "org.springframework.security:spring-security-config"
+    compile "org.hibernate:hibernate-validator"
+    compile "com.fasterxml.jackson.core:jackson-databind"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-hibernate4"
+    compile "javax.servlet:javax.servlet-api"
+
+
+}
