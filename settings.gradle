@@ -1,6 +1,0 @@
-rootProject.name = 'gradle-springboot'
-include 'gradle-springboot-webapp'
-include 'gradle-springboot-core'
-include 'gradle-springboot-admin-manager'
-include 'gradle-springboot-manager'
-
