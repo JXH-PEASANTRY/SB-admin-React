@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import Header from './Header/index'
-import Table from '../router/dashboardPages/table/Table'
-import AnalysisManager from '../router/dashboardPages/mdcsAnalysis/AnalysisManager';
+import Table from '../Container/dashboardPages/table/Table'
+import AnalysisManager from '../Container/dashboardPages/mdcsAnalysis/AnalysisManager';
 import RouteHandler from 'react-router'
+import { connect } from 'react-redux'
+import {bindActionCreators} from 'redux';
+
+import * as actions from '../actions/action'
 
 
 
@@ -21,4 +25,13 @@ class App extends Component {
     }
 }
 
-export default App
+/*let mapStateToProps = state => {
+    return {
+        state
+    }
+};
+
+let mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);*/
+
+
+export default App;

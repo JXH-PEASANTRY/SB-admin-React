@@ -575,3 +575,6 @@ i.fa.fa-plus {
     border-bottom-color: #3c8dbc;
 }
 
+.pointer{
+    cursor: pointer;
+}
